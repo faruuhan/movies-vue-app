@@ -1,15 +1,7 @@
 <template>
-  <div class="flex flex-wrap gap-2">
-    <div class="w-[12rem]" v-for="movies in dataMovies" :key="movies.id">
-      <img
-        :src="pathImg + movies.poster_path"
-        :alt="movies.poster_path"
-        class="rounded mb-2"
-      />
-      <h3 class="font-semibold">{{ movies.original_title }}</h3>
-      <p class="text-slate-400">
-        {{ dayjs(movies.release_date).format("MMM DD, YYYY") }}
-      </p>
+  <div class="container mx-auto mt-4">
+    <div class="flex flex-wrap gap-2">
+      <CardMovie v-for="movies in dataMovies" :movie="movies" />
     </div>
   </div>
 </template>
@@ -17,15 +9,14 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import axios from "axios";
-import * as dayjs from "dayjs";
 
-let pathImg = ref("https://image.tmdb.org/t/p/w500");
+import CardMovie from "./../components/CardMovie.vue";
+
 let dataMovies = ref([]);
 let currentPage = ref(1);
 
 onMounted(() => {
   fetchData();
-  console.log(import.meta.env.API_APP_KEY);
 });
 
 const fetchData = async () => {
