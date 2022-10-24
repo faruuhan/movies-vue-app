@@ -8,7 +8,7 @@ import Header from "./components/Header.vue";
 
 <template>
   <Header />
-  <Homepage />
+  <router-view />
 </template>
 
 <style scoped>
