@@ -1,6 +1,6 @@
 <template>
-  <div class="container mx-auto mt-4">
-    <div class="flex flex-wrap gap-2">
+  <div class="container mx-auto mt-4 px-4">
+    <div class="flex flex-wrap">
       <CardMovie v-for="movies in dataMovies" :movie="movies" />
     </div>
   </div>
