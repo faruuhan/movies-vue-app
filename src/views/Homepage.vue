@@ -2,8 +2,8 @@
   <div class="container mx-auto mt-4 px-4 lg:px-0">
     <div class="flex space-x-4 snap-x overflow-x-scroll scrollbar">
       <div
-        v-for="movies in dataTranding"
-        class="snap-center flex-[0_0_22rem] lg:flex-[0_0_60rem]"
+        v-for="movies in dataTrendingMovie"
+        class="snap-center flex-[0_0_22rem] md:flex-[0_0_32rem] lg:flex-[0_0_60rem]"
       >
         <BannerMovie :movie="movies" />
       </div>
@@ -57,6 +57,7 @@
 
 <script setup>
 import { ref, onMounted } from "vue";
+import { computed } from "@vue/reactivity";
 import axios from "axios";
 
 import CardMovie from "../components/CardMovie.vue";
@@ -66,11 +67,17 @@ let dataNowPlaying = ref([]);
 let dataPopular = ref([]);
 let dataTopRate = ref([]);
 let dataUpComing = ref([]);
-let dataTranding = ref([]);
+let dataTrending = ref([]);
 let currentPage = ref(1);
 
 onMounted(() => {
   fetchData();
+});
+
+const dataTrendingMovie = computed(() => {
+  return dataTrending.value.filter((movies) => {
+    return movies.media_type == "movie";
+  });
 });
 
 const fetchData = async () => {
@@ -133,7 +140,7 @@ const fetchData = async () => {
       }`
     )
     .then((ress) => {
-      dataTranding.value = ress.data.results;
+      dataTrending.value = ress.data.results;
     })
     .catch((err) => {
       console.log(err);
