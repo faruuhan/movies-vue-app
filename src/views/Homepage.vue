@@ -1,5 +1,13 @@
 <template>
   <div class="container mx-auto mt-4 px-4 lg:px-0">
+    <div class="flex space-x-4 snap-x overflow-x-scroll scrollbar">
+      <div v-for="movies in dataTranding" class="snap-center flex-[0_0_60rem]">
+        <BannerMovie :movie="movies" />
+      </div>
+    </div>
+  </div>
+
+  <div class="container mx-auto mt-4 px-4 lg:px-0">
     <h3 class="font-semibold text-lg">Now Playing</h3>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
@@ -48,12 +56,14 @@
 import { ref, onMounted } from "vue";
 import axios from "axios";
 
-import CardMovie from "./../components/CardMovie.vue";
+import CardMovie from "../components/CardMovie.vue";
+import BannerMovie from "../components/BannerMovie.vue";
 
 let dataNowPlaying = ref([]);
 let dataPopular = ref([]);
 let dataTopRate = ref([]);
 let dataUpComing = ref([]);
+let dataTranding = ref([]);
 let currentPage = ref(1);
 
 onMounted(() => {
@@ -108,6 +118,19 @@ const fetchData = async () => {
     )
     .then((ress) => {
       dataUpComing.value = ress.data.results;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  await axios
+    .get(
+      `https://api.themoviedb.org/3/trending/all/day?api_key=${
+        import.meta.env.VITE_API_APP_KEY
+      }`
+    )
+    .then((ress) => {
+      dataTranding.value = ress.data.results;
     })
     .catch((err) => {
       console.log(err);
