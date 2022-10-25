@@ -1,7 +1,10 @@
 <template>
   <div class="container mx-auto mt-4 px-4 lg:px-0">
     <div class="flex space-x-4 snap-x overflow-x-scroll scrollbar">
-      <div v-for="movies in dataTranding" class="snap-center flex-[0_0_60rem]">
+      <div
+        v-for="movies in dataTranding"
+        class="snap-center flex-[0_0_22rem] lg:flex-[0_0_60rem]"
+      >
         <BannerMovie :movie="movies" />
       </div>
     </div>
@@ -139,12 +142,10 @@ const fetchData = async () => {
 </script>
 
 <style>
-/* Hide scrollbar for Chrome, Safari and Opera */
 .scrollbar::-webkit-scrollbar {
   width: 20px;
 }
 
-/* Hide scrollbar for IE, Edge and Firefox */
 .scrollbar::-webkit-scrollbar-thumb {
   @apply bg-gray-300;
   border-radius: 20px;
