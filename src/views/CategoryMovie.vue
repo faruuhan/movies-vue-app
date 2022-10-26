@@ -1,15 +1,8 @@
 <template>
   <div class="container mx-auto mt-4 px-4 lg:px-0">
-    <h3 class="font-semibold text-xl px-2" v-if="category == 'now_playing'">
-      Now Playing
+    <h3 class="font-semibold text-xl px-2">
+      {{ titleCategory }}
     </h3>
-    <h3 class="font-semibold text-xl px-2" v-else-if="category == 'popular'">
-      Popular
-    </h3>
-    <h3 class="font-semibold text-xl px-2" v-else-if="category == 'top_rated'">
-      Top Rated
-    </h3>
-    <h3 class="font-semibold text-xl px-2" v-else>Upcoming</h3>
     <div class="flex flex-wrap gap-y-2 mt-2">
       <CardMovie
         v-for="movies in dataMovies"
@@ -35,6 +28,7 @@ import { useRoute } from "vue-router";
 import axios from "axios";
 
 import CardMovie from "../components/CardMovie.vue";
+import { computed } from "@vue/reactivity";
 
 const route = useRoute();
 const { category } = route.params;
@@ -49,6 +43,16 @@ onMounted(() => {
 watch(currentPage, () => {
   fetchData();
 });
+
+const titleCategory = computed(() =>
+  category == "now_playing"
+    ? "Now Playing"
+    : category == "popular"
+    ? "Polpular"
+    : category == "top_rated"
+    ? "Top Rated"
+    : "Upcoming"
+);
 
 const fetchData = async () => {
   await axios

@@ -113,10 +113,11 @@ const fetchData = async () => {
     .get(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${
         import.meta.env.VITE_API_APP_KEY
-      }&language=en-US&page=${currentPage}`
+      }&language=en-US&page=${currentPage.value}`
     )
     .then((ress) => {
-      dataNowPlaying.value = ress.data.results;
+      const { results } = ress.data;
+      dataNowPlaying.value = results;
     })
     .catch((err) => {
       console.log(err);
@@ -126,10 +127,11 @@ const fetchData = async () => {
     .get(
       `https://api.themoviedb.org/3/movie/popular?api_key=${
         import.meta.env.VITE_API_APP_KEY
-      }&language=en-US&page=${currentPage}`
+      }&language=en-US&page=${currentPage.value}`
     )
     .then((ress) => {
-      dataPopular.value = ress.data.results;
+      const { results } = ress.data;
+      dataPopular.value = results;
     })
     .catch((err) => {
       console.log(err);
@@ -139,10 +141,11 @@ const fetchData = async () => {
     .get(
       `https://api.themoviedb.org/3/movie/top_rated?api_key=${
         import.meta.env.VITE_API_APP_KEY
-      }&language=en-US&page=${currentPage}`
+      }&language=en-US&page=${currentPage.value}`
     )
     .then((ress) => {
-      dataTopRate.value = ress.data.results;
+      const { results } = ress.data;
+      dataTopRate.value = results;
     })
     .catch((err) => {
       console.log(err);
@@ -152,10 +155,11 @@ const fetchData = async () => {
     .get(
       `https://api.themoviedb.org/3/movie/upcoming?api_key=${
         import.meta.env.VITE_API_APP_KEY
-      }&language=en-US&page=${currentPage}`
+      }&language=en-US&page=${currentPage.value}`
     )
     .then((ress) => {
-      dataUpComing.value = ress.data.results;
+      const { results } = ress.data;
+      dataUpComing.value = results;
     })
     .catch((err) => {
       console.log(err);
@@ -168,7 +172,8 @@ const fetchData = async () => {
       }`
     )
     .then((ress) => {
-      dataTrending.value = ress.data.results;
+      const { results } = ress.data;
+      dataTrending.value = results;
     })
     .catch((err) => {
       console.log(err);
