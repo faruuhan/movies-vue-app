@@ -21,7 +21,7 @@
     <div class="flex justify-center my-2" v-if="!noData">
       <button
         class="bg-neutral-700 px-5 py-2 text-white font-semibold rounded-2xl hover:opacity-80"
-        @click="handleNextPage"
+        @click="currentPage++"
       >
         Load More
       </button>
@@ -67,9 +67,5 @@ const fetchData = async () => {
       }
     })
     .catch((err) => console.log(err));
-};
-
-const handleNextPage = () => {
-  currentPage.value++;
 };
 </script>
