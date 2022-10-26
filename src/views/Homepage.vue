@@ -11,7 +11,14 @@
   </div>
 
   <div class="container mx-auto mt-4 px-4 lg:px-0">
-    <h3 class="font-semibold text-lg">Now Playing</h3>
+    <div class="flex justify-between">
+      <h3 class="font-semibold text-xl">Now Playing</h3>
+      <router-link
+        :to="{ path: '/now_playing' }"
+        class="text-blue-500 hover:opacity-70 font-medium"
+        >More</router-link
+      >
+    </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
         v-for="movies in dataNowPlaying"
@@ -22,7 +29,14 @@
   </div>
 
   <div class="container mx-auto mt-4 px-4 lg:px-0">
-    <h3 class="font-semibold text-lg">Popular</h3>
+    <div class="flex justify-between">
+      <h3 class="font-semibold text-xl">Popular</h3>
+      <router-link
+        :to="{ path: '/popular' }"
+        class="text-blue-500 hover:opacity-70 font-medium"
+        >More</router-link
+      >
+    </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
         v-for="movies in dataPopular"
@@ -33,7 +47,14 @@
   </div>
 
   <div class="container mx-auto mt-4 px-4 lg:px-0">
-    <h3 class="font-semibold text-lg">Top Rate</h3>
+    <div class="flex justify-between">
+      <h3 class="font-semibold text-xl">Top Rated</h3>
+      <router-link
+        :to="{ path: '/top_rated' }"
+        class="text-blue-500 hover:opacity-70 font-medium"
+        >More</router-link
+      >
+    </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
         v-for="movies in dataTopRate"
@@ -44,7 +65,14 @@
   </div>
 
   <div class="container mx-auto mt-4 px-4 lg:px-0">
-    <h3 class="font-semibold text-lg">Upcoming</h3>
+    <div class="flex justify-between">
+      <h3 class="font-semibold text-xl">Upcoming</h3>
+      <router-link
+        :to="{ path: '/upcoming' }"
+        class="text-blue-500 hover:opacity-70 font-medium"
+        >More</router-link
+      >
+    </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
         v-for="movies in dataUpComing"
