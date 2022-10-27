@@ -12,7 +12,10 @@
         <h1
           class="text-white font-bold text-xl md:text-2xl lg:text-4xl hover:text-white/70"
         >
-          {{ movie.original_title }} ({{ movie.release_date.split("-")[0] }})
+          {{ movie.original_title }}
+          <span class="font-medium">
+            ({{ movie.release_date.split("-")[0] }})
+          </span>
         </h1>
       </router-link>
       <p class="text-gray-300 hidden md:block tracking-wide">

@@ -24,11 +24,11 @@
 
 <script setup>
 import { onMounted, ref, watch } from "vue";
+import { computed } from "@vue/reactivity";
 import { useRoute } from "vue-router";
 import axios from "axios";
 
 import CardMovie from "../components/CardMovie.vue";
-import { computed } from "@vue/reactivity";
 
 const route = useRoute();
 const { category } = route.params;
