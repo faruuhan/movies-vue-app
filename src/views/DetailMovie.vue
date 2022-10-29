@@ -28,14 +28,31 @@
           >
         </h1>
         <div class="text-center lg:text-left">
-          {{ dataMovie.release_date }} • {{ genres.join(", ") }}
+          {{ dataMovie.release_date }} • {{ genres.join(", ") }} •
+          {{ dataMovie.status }}
         </div>
-        <p class="italic text-neutral-400">{{ dataMovie.tagline }}</p>
         <div>
+          <p class="italic text-neutral-400">{{ dataMovie.tagline }}</p>
           <h3 class="font-semibold text-lg">Overview</h3>
           <p>{{ dataMovie.overview }}</p>
+          <p class="font-semibold">
+            Languange
+            <span class="font-normal">{{ spoken.join(", ") }}</span>
+          </p>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="container mx-auto my-2">
+    <div class="flex w-full overflow-x-auto scrollbar">
+      <iframe
+        width="420"
+        height="315"
+        v-for="video in videos"
+        :id="video.id"
+        :src="`https://www.youtube.com/embed/${video.key}`"
+      >
+      </iframe>
     </div>
   </div>
 </template>
@@ -50,19 +67,22 @@ const route = useRoute();
 const { id } = route.params;
 
 let dataMovie = ref({});
+let videos = ref([]);
 let isReady = ref(false);
 
 onMounted(() => {
   fetchData();
 });
 
-const backgroundImg = computed(
-  () => "https://image.tmdb.org/t/p/w500" + dataMovie.value.backdrop_path
-);
-
 const genres = computed(() => {
   return dataMovie.value.genres.map((genre) => {
     return genre.name;
+  });
+});
+
+const spoken = computed(() => {
+  return dataMovie.value.spoken_languages.map((spoken) => {
+    return spoken.name;
   });
 });
 
@@ -71,11 +91,12 @@ const fetchData = async () => {
     .get(
       `https://api.themoviedb.org/3/movie/${id}?api_key=${
         import.meta.env.VITE_API_APP_KEY
-      }&language=en-US`
+      }&append_to_response=videos`
     )
     .then((ress) => {
       const { data } = ress;
       dataMovie.value = data;
+      videos.value = data.videos.results;
       isReady.value = true;
     })
     .catch((err) => {
@@ -85,9 +106,18 @@ const fetchData = async () => {
 </script>
 
 <style>
-.bg-sampulImage {
-  background-image: v-bind(
-    "`https://image.tmdb.org/t/p/original`+ dataMovie.backdrop_path"
-  );
+.scrollbar::-webkit-scrollbar {
+  width: 20px;
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+  @apply bg-gray-300;
+  border-radius: 20px;
+  border: 6px solid transparent;
+  background-clip: content-box;
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+  @apply bg-gray-400;
 }
 </style>
