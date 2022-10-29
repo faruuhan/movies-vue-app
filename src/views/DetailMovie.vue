@@ -82,7 +82,7 @@ const genres = computed(() => {
 
 const spoken = computed(() => {
   return dataMovie.value.spoken_languages.map((spoken) => {
-    return spoken.name;
+    return spoken.english_name;
   });
 });
 
