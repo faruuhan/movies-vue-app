@@ -23,6 +23,8 @@
       <CardMovie
         v-for="movies in dataNowPlaying"
         :movie="movies"
+        :addFavorite="handleFavorite"
+        :favorited="store.state.favorite"
         class="flex-[0_0_10rem]"
       />
     </div>
@@ -41,6 +43,8 @@
       <CardMovie
         v-for="movies in dataPopular"
         :movie="movies"
+        :addFavorite="handleFavorite"
+        :favorited="store.state.favorite"
         class="flex-[0_0_10rem]"
       />
     </div>
@@ -59,6 +63,8 @@
       <CardMovie
         v-for="movies in dataTopRate"
         :movie="movies"
+        :addFavorite="handleFavorite"
+        :favorited="store.state.favorite"
         class="flex-[0_0_10rem]"
       />
     </div>
@@ -77,6 +83,8 @@
       <CardMovie
         v-for="movies in dataUpComing"
         :movie="movies"
+        :addFavorite="handleFavorite"
+        :favorited="store.state.favorite"
         class="flex-[0_0_10rem]"
       />
     </div>
@@ -86,6 +94,7 @@
 <script setup>
 import { ref, onMounted, computed } from "vue";
 import axios from "axios";
+import { useStore } from "vuex";
 
 import CardMovie from "../components/CardMovie.vue";
 import BannerMovie from "../components/BannerMovie.vue";
@@ -96,6 +105,7 @@ let dataTopRate = ref([]);
 let dataUpComing = ref([]);
 let dataTrending = ref([]);
 let currentPage = ref(1);
+const store = useStore();
 
 onMounted(() => {
   fetchData();
@@ -107,7 +117,26 @@ const dataTrendingMovie = computed(() => {
   });
 });
 
+const handleFavorite = (item) => {
+  let favorite = JSON.parse(localStorage.getItem("data"));
+  if (favorite) {
+    let findIndex = favorite.findIndex((i) => i.id === item.id);
+    if (findIndex > -1) {
+      favorite.splice(findIndex, 1);
+      localStorage.removeItem("data");
+      localStorage.setItem("data", JSON.stringify(favorite));
+    } else {
+      favorite.push(item);
+      localStorage.setItem("data", JSON.stringify(favorite));
+    }
+  } else {
+    localStorage.setItem("data", JSON.stringify([item]));
+  }
+  fetchData();
+};
+
 const fetchData = async () => {
+  store.commit("setFavorite", JSON.parse(localStorage.getItem("data")));
   await axios
     .get(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${

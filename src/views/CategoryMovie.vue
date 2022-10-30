@@ -7,6 +7,8 @@
       <CardMovie
         v-for="movies in dataMovies"
         :movie="movies"
+        :addFavorite="handleFavorite"
+        :favorited="store.state.favorite"
         class="w-1/2 px-2 md:w-3/12 lg:w-2/12"
       />
     </div>
@@ -25,6 +27,7 @@
 <script setup>
 import { onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
+import { useStore } from "vuex";
 import axios from "axios";
 import CardMovie from "../components/CardMovie.vue";
 
@@ -34,6 +37,7 @@ const { category } = route.params;
 let dataMovies = ref([]);
 let currentPage = ref(1);
 let noData = ref(false);
+const store = useStore();
 
 onMounted(() => {
   fetchData();
@@ -52,6 +56,23 @@ const titleCategory = computed(() =>
     ? "Top Rated"
     : "Upcoming"
 );
+
+const handleFavorite = (item) => {
+  let favorite = JSON.parse(localStorage.getItem("data"));
+  if (favorite) {
+    let findIndex = favorite.findIndex((i) => i.id === item.id);
+    if (findIndex > -1) {
+      favorite.splice(findIndex, 1);
+      localStorage.removeItem("data");
+      localStorage.setItem("data", JSON.stringify(favorite));
+    } else {
+      favorite.push(item);
+      localStorage.setItem("data", JSON.stringify(favorite));
+    }
+  } else {
+    localStorage.setItem("data", JSON.stringify([item]));
+  }
+};
 
 const fetchData = async () => {
   await axios
