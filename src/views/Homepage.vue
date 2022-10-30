@@ -132,11 +132,10 @@ const handleFavorite = (item) => {
   } else {
     localStorage.setItem("data", JSON.stringify([item]));
   }
-  fetchData();
+  store.commit("setFavorite", JSON.parse(localStorage.getItem("data")));
 };
 
 const fetchData = async () => {
-  store.commit("setFavorite", JSON.parse(localStorage.getItem("data")));
   await axios
     .get(
       `https://api.themoviedb.org/3/movie/now_playing?api_key=${

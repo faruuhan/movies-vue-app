@@ -72,6 +72,7 @@ const handleFavorite = (item) => {
   } else {
     localStorage.setItem("data", JSON.stringify([item]));
   }
+  store.commit("setFavorite", JSON.parse(localStorage.getItem("data")));
 };
 
 const fetchData = async () => {
