@@ -58,10 +58,9 @@
 </template>
 
 <script setup>
-import { computed } from "@vue/reactivity";
-import axios from "axios";
-import { onMounted, ref } from "vue";
+import { onMounted, ref, computed } from "vue";
 import { useRoute } from "vue-router";
+import axios from "axios";
 
 const route = useRoute();
 const { id } = route.params;

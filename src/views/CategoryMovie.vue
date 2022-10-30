@@ -23,15 +23,14 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
-import { computed } from "@vue/reactivity";
+import { onMounted, ref, watch, computed } from "vue";
 import { useRoute } from "vue-router";
 import axios from "axios";
-
 import CardMovie from "../components/CardMovie.vue";
 
 const route = useRoute();
 const { category } = route.params;
+
 let dataMovies = ref([]);
 let currentPage = ref(1);
 let noData = ref(false);

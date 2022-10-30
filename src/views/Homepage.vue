@@ -84,8 +84,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { computed } from "@vue/reactivity";
+import { ref, onMounted, computed } from "vue";
 import axios from "axios";
 
 import CardMovie from "../components/CardMovie.vue";
