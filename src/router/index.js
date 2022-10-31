@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 import Homepage from "../views/Homepage.vue";
 import DetailMovie from "../views/DetailMovie.vue";
 import CategoryMovie from "../views/CategoryMovie.vue";
+import FavoriteMovie from "../views/FavoriteMovie.vue";
 
 const routes = [
   {
@@ -18,6 +19,11 @@ const routes = [
     path: "/:category",
     name: "CategoryMovie",
     component: CategoryMovie,
+  },
+  {
+    path: "/favorite",
+    name: "FavoriteMovie",
+    component: FavoriteMovie,
   },
 ];
 

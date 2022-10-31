@@ -109,6 +109,7 @@ const store = useStore();
 
 onMounted(() => {
   fetchData();
+  store.commit("setFavorite", JSON.parse(localStorage.getItem("data")));
 });
 
 const dataTrendingMovie = computed(() => {
