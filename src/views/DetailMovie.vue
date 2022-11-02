@@ -65,9 +65,9 @@ import axios from "axios";
 const route = useRoute();
 const { id } = route.params;
 
-let dataMovie = ref({});
-let videos = ref([]);
-let isReady = ref(false);
+const dataMovie = ref({});
+const videos = ref([]);
+const isReady = ref(false);
 
 onMounted(() => {
   fetchData();

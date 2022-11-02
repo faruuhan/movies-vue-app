@@ -34,9 +34,9 @@ import CardMovie from "../components/CardMovie.vue";
 const route = useRoute();
 const { category } = route.params;
 
-let dataMovies = ref([]);
-let currentPage = ref(1);
-let noData = ref(false);
+const dataMovies = ref([]);
+const currentPage = ref(1);
+const noData = ref(false);
 const store = useStore();
 
 onMounted(() => {

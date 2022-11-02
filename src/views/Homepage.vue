@@ -21,7 +21,7 @@
     </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
-        v-for="movies in dataNowPlaying"
+        v-for="movies in state.nowPlaying"
         :movie="movies"
         :addFavorite="handleFavorite"
         :favorited="store.state.favorite"
@@ -41,7 +41,7 @@
     </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
-        v-for="movies in dataPopular"
+        v-for="movies in state.popular"
         :movie="movies"
         :addFavorite="handleFavorite"
         :favorited="store.state.favorite"
@@ -61,7 +61,7 @@
     </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
-        v-for="movies in dataTopRate"
+        v-for="movies in state.topRated"
         :movie="movies"
         :addFavorite="handleFavorite"
         :favorited="store.state.favorite"
@@ -81,7 +81,7 @@
     </div>
     <div class="flex overflow-x-scroll space-x-4 scrollbar mt-2">
       <CardMovie
-        v-for="movies in dataUpComing"
+        v-for="movies in state.upComing"
         :movie="movies"
         :addFavorite="handleFavorite"
         :favorited="store.state.favorite"
@@ -92,19 +92,22 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from "vue";
+import { ref, reactive, onMounted, computed } from "vue";
 import axios from "axios";
 import { useStore } from "vuex";
 
 import CardMovie from "../components/CardMovie.vue";
 import BannerMovie from "../components/BannerMovie.vue";
 
-let dataNowPlaying = ref([]);
-let dataPopular = ref([]);
-let dataTopRate = ref([]);
-let dataUpComing = ref([]);
-let dataTrending = ref([]);
-let currentPage = ref(1);
+const state = reactive({
+  nowPlaying: [],
+  popular: [],
+  topRated: [],
+  upComing: [],
+  trending: [],
+});
+
+const currentPage = ref(1);
 const store = useStore();
 
 onMounted(() => {
@@ -113,7 +116,8 @@ onMounted(() => {
 });
 
 const dataTrendingMovie = computed(() => {
-  return dataTrending.value.filter((movies) => {
+  const { trending } = state;
+  return trending.filter((movies) => {
     return movies.media_type == "movie";
   });
 });
@@ -145,7 +149,7 @@ const fetchData = async () => {
     )
     .then((ress) => {
       const { results } = ress.data;
-      dataNowPlaying.value = results;
+      state.nowPlaying = results;
     })
     .catch((err) => {
       console.log(err);
@@ -159,7 +163,7 @@ const fetchData = async () => {
     )
     .then((ress) => {
       const { results } = ress.data;
-      dataPopular.value = results;
+      state.popular = results;
     })
     .catch((err) => {
       console.log(err);
@@ -173,7 +177,7 @@ const fetchData = async () => {
     )
     .then((ress) => {
       const { results } = ress.data;
-      dataTopRate.value = results;
+      state.topRated = results;
     })
     .catch((err) => {
       console.log(err);
@@ -187,7 +191,7 @@ const fetchData = async () => {
     )
     .then((ress) => {
       const { results } = ress.data;
-      dataUpComing.value = results;
+      state.upComing = results;
     })
     .catch((err) => {
       console.log(err);
@@ -201,7 +205,7 @@ const fetchData = async () => {
     )
     .then((ress) => {
       const { results } = ress.data;
-      dataTrending.value = results;
+      state.trending = results;
     })
     .catch((err) => {
       console.log(err);
