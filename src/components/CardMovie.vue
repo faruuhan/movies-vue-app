@@ -49,7 +49,7 @@
 </template>
 
 <script setup>
-import * as dayjs from "dayjs";
+import dayjs from "dayjs";
 import { computed, toRaw } from "vue";
 const props = defineProps(["movie", "class", "addFavorite", "favorited"]);
 const pathImg = "https://image.tmdb.org/t/p/w500";
